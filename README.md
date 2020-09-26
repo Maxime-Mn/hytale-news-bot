@@ -1,6 +1,8 @@
 # hytale-news-bot
 A simple discord bot giving news about Hytale game.
 
+Add this bot to your server [HERE](https://discord.com/oauth2/authorize?client_id=759520069628723230&permissions=117760&scope=bot)
+
 ## How to Setup ?
 
 - ```DISCORD_TOKEN``` with a Discord token.
