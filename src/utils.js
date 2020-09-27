@@ -1,14 +1,17 @@
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 const CHANNEL_ID = process.env.CHANNEL_ID;
 const URL = "https://hytale.com/api/blog/post/published";
-var ID_LAST_POST = 0;
+const LAST_FILE = "../config/last.json";
 
 module.exports = {
     getLastPost: async function (bot) {
-        const { data } = await axios.get(URL);
-        const lastElement = data[0];
 
-        if (lastElement._id !== ID_LAST_POST) {
+        const lastElement = (await axios.get(URL)).data[0];
+        const {last} = lastSaved();
+
+        if (lastElement._id !== last) {
             bot.channels.cache.get(CHANNEL_ID).send({
                 embed: {
                     color: 3447003,
@@ -28,6 +31,17 @@ module.exports = {
                 }
             });
         }
-        ID_LAST_POST = lastElement._id;
+        saveLast(lastElement._id);
     }
+}
+
+function lastSaved(){
+    let rawdata = fs.readFileSync(path.resolve(__dirname, LAST_FILE));
+    let last = JSON.parse(rawdata);
+    return last;
+}
+
+function saveLast(id){
+    let data = { "last": id };
+    fs.writeFileSync(path.resolve(__dirname, LAST_FILE), JSON.stringify(data));
 }
