@@ -21,7 +21,7 @@ module.exports = {
                                     name: 'New Hytale news !',
                                 },
                                 title: lastElement.title,
-                                url: `https://hytale.com/news`,
+                                url: `https://hytale.com/news/${new Date(lastElement.publishedAt).getFullYear()}/${new Date(lastElement.publishedAt).getMonth() + 1}/${lastElement.slug}`,
                                 description: lastElement.bodyExcerpt,
                                 timestamp: new Date(),
                                 image: {
